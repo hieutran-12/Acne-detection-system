@@ -1,12 +1,12 @@
-# Render Blueprint cho BACKEND TRUNG GIAN (model chạy ở Colab, xem DEPLOY.md).
-# Nếu repo có cả frontend/ thì Render đọc file này ở thư mục gốc repo: chuyển file ra gốc và giữ rootDir: backend.
+# Render Blueprint cho backend trung gian, model chạy ở Colab (xem DEPLOY.md).
+# Render đọc file này ở gốc repo, muốn dùng Blueprint thì chuyển file ra gốc và giữ rootDir: backend.
 services:
   - type: web
     name: acnescope-api
     runtime: python
     rootDir: backend
     region: singapore
-    plan: free            # free ngủ sau 15 phút không dùng; starter thì không ngủ
+    plan: free            # gói free ngủ sau 15 phút không dùng, starter thì không
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /api/config
@@ -18,7 +18,7 @@ services:
       - key: INFERENCE_API_KEY
         sync: false       # trùng INFER_API_KEY trên Colab
       - key: MAX_UPLOAD_MB
-        value: "30"       # Render không giới hạn 4,5 MB như Vercel -> gửi ảnh gốc
+        value: "30"       # Render không chặn 4,5 MB như Vercel nên gửi được ảnh gốc
       - key: CONF_DEFAULT
         value: "0.175"
       - key: CORS_ORIGINS

@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { MAX_PHOTOS } from '../api.js';
 import Icon from './Icon.jsx';
 
-// Model train trên ảnh NỬA khuôn mặt chụp cận -> gợi ý mỗi ảnh một bên, không chồng lên nhau
+// Model train trên ảnh nửa mặt chụp cận nên gợi ý mỗi ảnh một bên, không chồng lên nhau
 export const HINTS = ['Nửa mặt trái', 'Nửa mặt phải', 'Vùng còn lại (trán / cằm)'];
 export const ACCEPT = 'image/*,.heic,.heif';
 
@@ -67,7 +67,7 @@ export default function PhotoScan({ photos, conf, onAdd, onRemove }) {
 
       <p className="photos-note">
         <Icon name="bulb" size={16} />
-        Mỗi ảnh nên là một vùng mặt riêng, chụp cận (một bên má chiếm gần hết khung). Tổng số mụn là cộng các ảnh, nên nếu các ảnh chồng lên nhau thì một nốt mụn có thể bị đếm hai lần.
+        Mỗi ảnh chụp một vùng mặt riêng, để một bên má chiếm gần hết khung. Tổng số mụn là cộng các ảnh lại, nên ảnh chồng lên nhau thì có nốt sẽ bị đếm hai lần.
       </p>
     </section>
   );

@@ -19,7 +19,7 @@ def grade(count: float, s) -> dict:
 
 
 def overall(counts: list[int], s) -> dict:
-    """Mức độ chung của nhiều ảnh. KHÔNG xếp mức trên tổng (tổng 3 nửa mặt sẽ đẩy mức lên sai)."""
+    """Mức độ chung của nhiều ảnh. Không xếp mức trên tổng, vì cộng 3 ảnh nửa mặt sẽ đẩy mức lên sai."""
     if not counts:
         return grade(0, s)
     if s.sev_aggregate == "mean":

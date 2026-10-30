@@ -55,7 +55,7 @@ export default function ScanPage() {
     getConfig().then((c) => { setCfg({ ...DEFAULT_CFG, ...c }); setConf(c.conf_default ?? DEFAULT_CFG.conf_default); }).catch(() => {});
   }, []);
 
-  // Đếm lại ngay trên client theo ngưỡng conf hiện tại (BE đã trả mọi khung >= conf_floor)
+  // Đếm lại ngay trên client theo ngưỡng conf, BE đã trả mọi khung >= conf_floor
   const done = photos.filter((p) => p.status === 'done');
   const counts = done.map((p) => countAt(p.boxes, conf));
   const total = counts.reduce((s, c) => s + c, 0);
@@ -149,7 +149,7 @@ export default function ScanPage() {
         <div className="scan-left">
           <span className="pill">Phân tích da bằng AI</span>
           <h1>Thăm khám da bằng AI</h1>
-          <p className="lead">Chụp hoặc tải lên tối đa 3 ảnh cận cảnh da mặt (mỗi ảnh một bên mặt), AI sẽ đếm số nốt mụn trên từng ảnh, đánh giá mức độ và đưa ra gợi ý chăm sóc phù hợp.</p>
+          <p className="lead">Chụp hoặc tải lên tối đa 3 ảnh cận da mặt, mỗi ảnh một bên mặt. Hệ thống đếm nốt mụn trên từng ảnh, xếp mức độ rồi gợi ý cách chăm sóc.</p>
 
           <ol className="stepper">
             {STEPS[mode].map((t, i) => (
@@ -192,8 +192,8 @@ export default function ScanPage() {
         <div className="below">
           <div className="care">
             <span className="leafbox"><Icon name="leaf" size={24} /></span>
-            <h3>Chăm sóc da bắt đầu từ việc hiểu rõ làn da của bạn.</h3>
-            <p>Công nghệ AI giúp bạn phát hiện sớm vấn đề về da và nhận được lời khuyên phù hợp.</p>
+            <h3>Biết mụn nhiều hay ít rồi hãy chọn cách chăm sóc.</h3>
+            <p>Có số nốt và mức độ trong tay thì dễ quyết định tự chăm sóc hay đi khám hơn.</p>
           </div>
           <div className="tips">
             <h3><Icon name="bulb" size={20} />Hướng dẫn chụp để kết quả chính xác hơn</h3>
@@ -271,7 +271,7 @@ export default function ScanPage() {
           <AiBlock
             result={result} more={more} setMore={setMore}
             hint={mode === 'photo'
-              ? 'Thêm ít nhất 1 ảnh rồi bấm “Phân tích & nhận lời khuyên”, AI sẽ nhận xét và đề xuất cách chăm sóc.'
+              ? 'Thêm ít nhất 1 ảnh rồi bấm “Phân tích & nhận lời khuyên” để xem nhận xét.'
               : 'Bật camera, chụp 1–3 ảnh rồi bấm “Phân tích & nhận lời khuyên”.'}
           />
 

@@ -1,11 +1,11 @@
-"""Test model độc lập, dùng CHUNG code đọc ảnh (xoay EXIF, HEIC) và detector với web.
+"""Test model không cần chạy web, dùng chung code đọc ảnh (xoay EXIF, HEIC) và detector.
 
     cd backend
     python test_model.py anh1.jpg anh2.heic anh3.jpg [--conf 0.25] [--out test_out]
 
-In số mụn từng ảnh + tổng + thời gian suy luận, lưu ảnh đã vẽ khung vào --out (thư mục bị .gitignore).
+In số mụn từng ảnh, tổng và thời gian suy luận, lưu ảnh đã vẽ khung vào --out (đã .gitignore).
 Nếu có nhãn YOLO (mặc định tìm ở <thư mục ảnh>/../labels/<tên>.txt, hoặc --labels DIR) thì so khớp IoU>=0.5:
-    đỏ = đúng (TP) | cam = báo nhầm (FP) | xanh lá = bỏ sót (FN) | xám mảnh = dưới ngưỡng conf
+    đỏ là đúng, cam là báo nhầm, xanh lá là bỏ sót, xám mảnh là dưới ngưỡng conf
 """
 import argparse
 import time
@@ -46,7 +46,7 @@ def iou(a4, b):
 
 
 def match(pred, gt):
-    """Ghép tham lam theo conf giảm dần. Trả (chỉ số pred đúng, chỉ số pred sai, chỉ số gt bị sót)."""
+    """Ghép theo conf giảm dần, trả về chỉ số pred đúng, pred sai và gt bị sót."""
     used, tp, fp = set(), [], []
     for i in np.argsort(-pred[:, 4]):
         if len(gt):
@@ -93,22 +93,22 @@ for p in map(Path, a.images):
         print(f"  cạnh ngắn khung (px ảnh gốc): nhỏ nhất {sizes[0]:.0f}, trung vị {sizes[len(sizes) // 2]:.0f}, lớn nhất {sizes[-1]:.0f}")
 
     gt = load_gt(p, *img.size)
-    colors = {i: (60, 60, 255) for i in range(len(keep))}  # đỏ = được đếm
+    colors = {i: (60, 60, 255) for i in range(len(keep))}  # đỏ: được đếm
     if gt is not None:
         gts.append(len(gt))
         tp, fp, fn = match(keep, gt)
-        colors.update({i: (0, 165, 255) for i in fp})  # cam = báo nhầm
+        colors.update({i: (0, 165, 255) for i in fp})  # cam: báo nhầm
         rec, prec = len(tp) / max(1, len(gt)), len(tp) / max(1, len(keep))
         print(f"  NHÃN GỐC = {len(gt)} | đúng {len(tp)} | báo nhầm {len(fp)} | bỏ sót {len(fn)} "
               f"| precision {prec:.2f} recall {rec:.2f} (IoU>={a.iou})")
         if fn:
             print(f"  cạnh ngắn khung BỎ SÓT: trung vị {np.median(short(gt[fn])):.0f}px | "
                   f"khung ĐÚNG: trung vị {np.median(short(keep[tp])) if tp else 0:.0f}px")
-        for x1, y1, x2, y2 in gt[fn]:  # xanh lá = bỏ sót
+        for x1, y1, x2, y2 in gt[fn]:  # xanh lá: bỏ sót
             cv2.rectangle(bgr, (int(x1), int(y1)), (int(x2), int(y2)), (0, 200, 0), 3)
 
     lw = max(2, round(max(img.size) / 800))
-    for x1, y1, x2, y2, c in dets[dets[:, 4] < a.conf]:  # xám mảnh = dưới ngưỡng
+    for x1, y1, x2, y2, c in dets[dets[:, 4] < a.conf]:  # xám mảnh: dưới ngưỡng
         cv2.rectangle(bgr, (int(x1), int(y1)), (int(x2), int(y2)), (200, 200, 200), 1)
     for i, (x1, y1, x2, y2, c) in enumerate(keep):
         cv2.rectangle(bgr, (int(x1), int(y1)), (int(x2), int(y2)), colors[i], lw)

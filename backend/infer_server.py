@@ -1,8 +1,8 @@
-"""Máy chủ MODEL (chạy trên Colab GPU, public qua ngrok). Backend trên Vercel gọi vào đây.
+"""Máy chủ model chạy trên Colab GPU, mở ra ngoài qua ngrok. Backend gọi vào đây để đếm mụn.
 
     INFER_API_KEY=... MODEL_WEIGHTS=best.pt uvicorn infer_server:app --port 8001
 
-Chỉ có 2 endpoint, không có LLM, không có giao diện. Ảnh xử lý trong RAM, không lưu.
+Chỉ có 2 endpoint, không có LLM hay giao diện. Ảnh nằm trong RAM, không lưu.
 """
 import asyncio
 import hmac

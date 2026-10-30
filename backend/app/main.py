@@ -13,12 +13,12 @@ from .config import settings
 from .severity import AGGREGATES, grade, levels, overall
 
 # Hai chế độ:
-#  - INFERENCE_URL rỗng  -> chạy model ngay trong process này (máy có GPU, dev local).
-#  - INFERENCE_URL có    -> chỉ là cổng trung gian (Vercel): chuyển ảnh sang máy chủ model (Colab + ngrok).
-#    Khi đó KHÔNG import torch/ultralytics/PIL (Vercel giới hạn 250 MB).
+#  - INFERENCE_URL rỗng: chạy model ngay trong process này (máy có GPU, dev local).
+#  - Có INFERENCE_URL: backend chỉ chuyển ảnh sang máy chủ model (Colab + ngrok).
+#    Lúc này đừng import torch/ultralytics/PIL, Vercel giới hạn 250 MB.
 REMOTE = bool(settings.inference_url)
 MAX_PHOTOS = 3
-pool = ThreadPoolExecutor(max_workers=1)  # 4 GB VRAM + model không thread-safe -> xử lý từng ảnh một
+pool = ThreadPoolExecutor(max_workers=1)  # VRAM có 4 GB, model lại không thread-safe nên xử lý từng ảnh một
 state: dict = {}
 
 if settings.sev_aggregate not in AGGREGATES:
@@ -91,8 +91,8 @@ def config():
 
 @app.post("/api/detect")
 async def detect(file: UploadFile = File(...)):
-    """1 ảnh -> mọi khung có conf >= CONF_FLOOR (toạ độ 0–1 theo ảnh đã xoay EXIF) + ảnh xem trước.
-    `count`/`severity` tính ở CONF_DEFAULT; FE tự lọc lại khi người dùng đổi ngưỡng."""
+    """Nhận 1 ảnh, trả mọi khung có conf >= CONF_FLOOR (toạ độ 0-1 theo ảnh đã xoay EXIF) và ảnh xem trước.
+    `count` và `severity` tính ở CONF_DEFAULT, FE tự đếm lại khi người dùng đổi ngưỡng."""
     data = await file.read()
     if len(data) > settings.max_upload_mb * 1024 * 1024:
         raise HTTPException(413, f"Ảnh quá lớn (tối đa {settings.max_upload_mb} MB)")
@@ -139,7 +139,7 @@ async def advice(body: AdviceIn):
 
 @app.post("/api/chat")
 async def chat(body: ChatIn):
-    """Tư vấn: đoạn chat của người dùng + số nốt mụn + tình trạng (note). Không gửi ảnh cho LLM."""
+    """Chat tư vấn. LLM chỉ nhận đoạn chat, số nốt mụn và ghi chú, không nhận ảnh."""
     _check_counts(body.counts)
     if body.messages[-1].role != "user":
         raise HTTPException(422, "Tin nhắn cuối phải của người dùng")

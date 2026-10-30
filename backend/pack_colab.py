@@ -1,7 +1,7 @@
 """Đóng gói code model + best.pt thành colab_bundle.zip để tải lên Google Drive cho Colab.
 
     cd backend
-    python pack_colab.py            # -> backend/colab_bundle.zip (bị .gitignore, KHÔNG chứa .env/token)
+    python pack_colab.py            # tạo backend/colab_bundle.zip (đã .gitignore, không chứa .env hay token)
 
 Chạy lại mỗi khi sửa code trong app/ hoặc đổi model, rồi tải lại file zip lên Drive.
 """

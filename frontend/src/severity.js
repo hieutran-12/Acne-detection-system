@@ -1,4 +1,4 @@
-// Bản sao logic backend/app/severity.py để FE lọc lại ngay khi kéo thanh ngưỡng conf (không chạy lại model).
+// Chép logic từ backend/app/severity.py để kéo thanh ngưỡng là đếm lại ngay, không phải gọi model.
 // Sửa một bên thì sửa cả bên kia.
 
 export const DEFAULT_CFG = {
@@ -24,7 +24,7 @@ export function levelFor(count, levels) {
   return levels.find((l) => l.max == null || count <= l.max);
 }
 
-/** Mức độ chung của nhiều ảnh. Không xếp mức trên TỔNG (mỗi ảnh ~ nửa mặt). */
+/** Mức độ chung của nhiều ảnh. Không xếp mức trên tổng vì mỗi ảnh chỉ khoảng nửa mặt. */
 export function overallLevel(counts, levels, aggregate) {
   if (!counts.length) return CLEAR;
   if (aggregate === 'mean') return levelFor(counts.reduce((s, c) => s + c, 0) / counts.length, levels);

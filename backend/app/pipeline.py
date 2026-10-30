@@ -1,5 +1,5 @@
-"""Xử lý 1 ảnh: đọc + xoay EXIF -> model -> khung chuẩn hoá + ảnh xem trước. Dùng chung cho backend chạy model
-tại chỗ (app.main, khi không đặt INFERENCE_URL) và máy chủ model trên Colab (infer_server.py)."""
+"""Xử lý 1 ảnh: đọc, xoay EXIF, chạy model, trả khung chuẩn hoá và ảnh xem trước. Backend chạy model tại chỗ
+(app.main, khi không đặt INFERENCE_URL) và máy chủ trên Colab (infer_server.py) đều dùng file này."""
 import time
 
 from PIL import Image, UnidentifiedImageError
@@ -8,7 +8,7 @@ from . import imaging
 
 
 def process(detector, data: bytes, preview_max: int) -> dict:
-    """Toàn bộ xử lý trong RAM, không ghi ảnh ra đĩa."""
+    """Mọi thứ nằm trong RAM, không ghi ảnh ra đĩa."""
     try:
         img = imaging.load(data)
     except (UnidentifiedImageError, Image.DecompressionBombError, OSError):

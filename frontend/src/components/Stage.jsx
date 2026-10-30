@@ -1,6 +1,6 @@
 import Icon from './Icon.jsx';
 
-const LOW_RES = 1920; // cạnh dài camera dưới mức này -> khuyên dùng ảnh chụp từ ứng dụng camera
+const LOW_RES = 1920; // cạnh dài camera dưới mức này thì khuyên chụp bằng ứng dụng camera
 
 export default function Stage({ videoRef, on, error, dims, mirror, canFlip, shooting, taken, full, nextHint, onStart, onCapture, onFlip, onStop }) {
   const live = on && !error;
@@ -38,7 +38,7 @@ export default function Stage({ videoRef, on, error, dims, mirror, canFlip, shoo
           <div className="cover">
             <span className="cover-ico"><Icon name="face" size={34} /></span>
             <h2>Chụp ảnh da mặt bằng camera</h2>
-            <p>Chụp tối đa 3 ảnh cận cảnh, mỗi ảnh một bên mặt. Ảnh chỉ được gửi để đếm mụn, không lưu lại. Trên điện thoại, “Tải ảnh lên” mở ứng dụng camera gốc sẽ cho ảnh nét hơn.</p>
+            <p>Chụp tối đa 3 ảnh cận, mỗi ảnh một bên mặt. Ảnh chỉ dùng để đếm mụn, không lưu lại. Trên điện thoại nên chọn “Tải ảnh lên” để mở app camera, ảnh sẽ nét hơn.</p>
             <button className="btn primary lg" onClick={onStart}><Icon name="camera" size={20} />Bật camera</button>
           </div>
         )}

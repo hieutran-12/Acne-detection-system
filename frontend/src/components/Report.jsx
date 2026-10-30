@@ -98,7 +98,7 @@ export function AiBlock({ result, more, setMore, hint }) {
     if (result.loading) return <div className="skeleton"><i /><i /><i style={{ width: '60%' }} /></div>;
     if (result.error) return <p className="error">Không lấy được nhận xét: {result.error}. Hãy thử lại lần nữa.</p>;
     const a = result.data.advice;
-    const severe = result.data.severity.key === 'severe'; // mức Nặng: lời khuyên đi khám luôn hiện, không ẩn trong "chi tiết"
+    const severe = result.data.severity.key === 'severe'; // mức Nặng thì luôn hiện lời khuyên đi khám, không giấu trong phần chi tiết
     return (
       <>
         <p>{a.summary}</p>

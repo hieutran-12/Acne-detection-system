@@ -19,19 +19,19 @@ async function req(path, opts) {
 
 export const getConfig = () => req('/api/config');
 
-/** Gửi NGUYÊN ảnh gốc (không thu nhỏ, kể cả HEIC). BE tự xoay EXIF, trả khung + ảnh xem trước đã xoay đúng. */
+/** Gửi nguyên ảnh gốc, kể cả HEIC. BE tự xoay EXIF rồi trả khung và ảnh xem trước. */
 export function detectPhoto(file) {
   const fd = new FormData();
   fd.append('file', file, file.name || 'photo.jpg');
   return req('/api/detect', { method: 'POST', body: fd });
 }
 
-// iOS Safari không vẽ được canvas > ~16,7 MP; model train trên ảnh ~10,7 MP (3112×3456) nên 12,5 MP là đủ chi tiết
+// iOS Safari không vẽ được canvas trên khoảng 16,7 MP. Ảnh train khoảng 10,7 MP nên 12,5 MP là đủ
 const MAX_PX = 12_500_000;
 const toJpeg = (c, q) => new Promise((ok) => c.toBlob(ok, 'image/jpeg', q));
 
-/** Ảnh vượt giới hạn upload (Vercel ~4,5 MB) -> nén lại JPEG, GIỮ độ phân giải (chỉ thu khi > MAX_PX).
- *  Trình duyệt tự xoay theo EXIF khi vẽ, nên ảnh gửi đi đã đúng chiều. Ảnh đủ nhỏ thì gửi nguyên gốc. */
+/** Ảnh vượt giới hạn upload (Vercel khoảng 4,5 MB) thì nén lại JPEG, giữ độ phân giải trừ khi quá MAX_PX.
+ *  Trình duyệt tự xoay theo EXIF khi vẽ nên ảnh gửi đi đã đúng chiều. Ảnh đủ nhỏ thì gửi nguyên. */
 export async function fitUpload(file, maxMB) {
   const limit = maxMB * 1024 * 1024 * 0.95;
   if (file.size <= limit) return file;

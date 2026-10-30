@@ -1,5 +1,5 @@
-// Chụp 1 ảnh tĩnh độ phân giải cao từ camera trình duyệt (không chạy model trên từng khung hình).
-// Ảnh chụp KHÔNG bị lật gương (bản xem trước camera trước mới bị lật); kết quả hiển thị dùng chính ảnh này nên khung luôn khớp.
+// Chụp 1 ảnh tĩnh độ phân giải cao từ camera trình duyệt.
+// Chỉ bản xem trước bị lật gương, ảnh chụp thì không, nên khung luôn khớp với ảnh hiển thị.
 
 const BURST = 6;
 const GAP_MS = 90;
@@ -8,7 +8,7 @@ const wait = (ms) => new Promise((ok) => setTimeout(ok, ms));
 const withTimeout = (p, ms) => Promise.race([p, wait(ms).then(() => { throw new Error('timeout'); })]);
 const toBlob = (c) => new Promise((ok, no) => c.toBlob((b) => (b ? ok(b) : no(new Error('blob'))), 'image/jpeg', 0.95));
 
-/** Độ nét = phương sai Laplacian trên vùng giữa ảnh (thu nhỏ để nhanh). Số càng lớn càng nét. */
+/** Độ nét: phương sai Laplacian ở vùng giữa ảnh, thu nhỏ cho nhanh. Số càng lớn càng nét. */
 function sharpness(src) {
   const S = 320;
   const c = document.createElement('canvas');
@@ -45,7 +45,7 @@ async function burst(video) {
   return best;
 }
 
-/** Trả về File JPEG. Ưu tiên ImageCapture.takePhoto (ảnh đầy đủ của cảm biến), không có thì lấy khung nét nhất. */
+/** Trả về File JPEG. Ưu tiên ImageCapture.takePhoto, không có thì lấy khung nét nhất. */
 export async function captureStill(video, track) {
   const name = `camera-${Date.now()}.jpg`;
   if (track && 'ImageCapture' in window) {
@@ -56,7 +56,7 @@ export async function captureStill(video, track) {
       bmp.close();
       if (big) return new File([blob], name, { type: blob.type || 'image/jpeg' });
     } catch {
-      // trình duyệt/camera không hỗ trợ takePhoto -> dùng khung hình video
+      // trình duyệt hoặc camera không hỗ trợ takePhoto thì dùng khung hình video
     }
   }
   return new File([await toBlob(await burst(video))], name, { type: 'image/jpeg' });

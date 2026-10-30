@@ -3,30 +3,30 @@ import Icon from './Icon.jsx';
 import { Logo } from './Nav.jsx';
 
 const TRIO = [
-  ['shield', 'An toàn, riêng tư', 'Hình ảnh không được lưu lại'],
-  ['chip', 'Công nghệ hiện đại', 'Nhận diện từng nốt mụn'],
-  ['heart', 'Cá nhân hóa', 'Lời khuyên theo mức độ'],
+  ['shield', 'Riêng tư', 'Hình ảnh không được lưu lại'],
+  ['chip', 'Đếm từng nốt', 'Khoanh từng nốt mụn trên ảnh'],
+  ['heart', 'Lời khuyên riêng', 'Tuỳ theo mức độ mụn của bạn'],
 ];
 const STEPS = [
-  ['camera', '1. Chụp ảnh da mặt', 'Tải lên 1–3 ảnh chụp cận bằng điện thoại (mỗi ảnh một bên mặt), hoặc chụp bằng camera trên trình duyệt.'],
-  ['face', '2. AI phân tích', 'Hệ thống khoanh và đếm từng nốt mụn trên mỗi ảnh rồi cộng tổng.'],
-  ['doc', '3. Nhận kết quả & lời khuyên', 'Biết mức độ nhẹ, trung bình, nặng cùng gợi ý chăm sóc từ AI. Kết quả chỉ mang tính tham khảo.'],
-  ['sparkle', '4. Gặp bác sĩ khi cần', 'Mụn nặng hoặc kéo dài, hãy đặt lịch để bác sĩ da liễu đánh giá kỹ hơn.'],
+  ['camera', '1. Chụp ảnh da mặt', 'Tải lên 1 đến 3 ảnh chụp cận bằng điện thoại, mỗi ảnh một bên mặt. Chụp ngay trên trình duyệt cũng được.'],
+  ['face', '2. AI đếm mụn', 'Hệ thống khoanh từng nốt mụn trên mỗi ảnh rồi cộng lại.'],
+  ['doc', '3. Xem kết quả', 'Bạn biết mụn đang ở mức nhẹ, trung bình hay nặng và nên chăm sóc thế nào. Kết quả chỉ mang tính tham khảo.'],
+  ['sparkle', '4. Gặp bác sĩ khi cần', 'Mụn nặng hoặc lâu khỏi thì nên đặt lịch để bác sĩ da liễu xem trực tiếp.'],
 ];
 // Ảnh ở public/images/services/, pos = điểm lấy nét khi cắt khung 2:1
 const SERVICES = [
-  ['Khám và phân tích da mặt', 'Đánh giá tình trạng da, phát hiện vấn đề tiềm ẩn.', 'kham-da', '55% 30%'],
-  ['Điều trị mụn', 'Phác đồ điều trị cá nhân hóa, hiệu quả và an toàn.', 'tri-mun', '50% 55%'],
-  ['Trị nám, tàn nhang', 'Ứng dụng công nghệ hiện đại, hiệu quả bền vững.', 'tri-nam', '35% 40%'],
-  ['Chống lão hóa', 'Cải thiện độ đàn hồi, trẻ hóa làn da.', 'chong-lao-hoa', '50% 42%'],
-  ['Chăm sóc da nhạy cảm', 'Làm dịu, phục hồi hàng rào bảo vệ da.', 'da-nhay-cam', '55% 30%'],
+  ['Khám và phân tích da mặt', 'Bác sĩ xem da đang có vấn đề gì trước khi điều trị.', 'kham-da', '55% 30%'],
+  ['Điều trị mụn', 'Phác đồ tuỳ theo tình trạng da của từng người.', 'tri-mun', '50% 55%'],
+  ['Trị nám, tàn nhang', 'Điều trị theo loại nám và nền da của bạn.', 'tri-nam', '35% 40%'],
+  ['Chống lão hóa', 'Giúp da săn chắc và đàn hồi hơn.', 'chong-lao-hoa', '50% 42%'],
+  ['Chăm sóc da nhạy cảm', 'Làm dịu da kích ứng, phục hồi da yếu.', 'da-nhay-cam', '55% 30%'],
 ];
 const FAQ = [
   ['Hình ảnh của tôi có bị lưu lại không?', 'Không. Mỗi ảnh chỉ được gửi tới máy chủ để đếm nốt mụn rồi bỏ đi, hệ thống không lưu hình ảnh khuôn mặt.'],
   ['Kết quả có thay thế bác sĩ da liễu không?', 'Không. Đây là công cụ sàng lọc tham khảo. Nếu mụn nặng, viêm đau hoặc kéo dài, bạn nên đến gặp bác sĩ da liễu.'],
-  ['Tôi dùng được trên điện thoại không?', 'Được. Mở trang bằng trình duyệt trên điện thoại, bấm “Chụp / chọn ảnh” để chụp bằng camera sau hoặc chọn ảnh có sẵn.'],
-  ['Vì sao nên tải ảnh thay vì chụp bằng camera trên trình duyệt?', 'Ảnh chụp bằng ứng dụng camera của điện thoại có độ phân giải cao hơn nhiều so với webcam, nên AI nhìn rõ cả những nốt mụn nhỏ.'],
-  ['Làm sao để kết quả chính xác hơn?', 'Chụp nơi ánh sáng tự nhiên, đều, để mặt mộc, tắt filter/làm đẹp, chụp cận để một bên mặt chiếm gần hết khung, mỗi ảnh một vùng mặt khác nhau và không chồng lên nhau.'],
+  ['Tôi dùng được trên điện thoại không?', 'Được. Mở trang bằng trình duyệt trên điện thoại rồi bấm “Chụp / chọn ảnh” để chụp mới hoặc chọn ảnh có sẵn.'],
+  ['Vì sao nên tải ảnh thay vì chụp bằng camera trên trình duyệt?', 'Ảnh từ app camera của điện thoại nét hơn webcam nhiều, nên AI thấy được cả những nốt mụn nhỏ.'],
+  ['Làm sao để kết quả chính xác hơn?', 'Chụp chỗ có ánh sáng tự nhiên, để mặt mộc và tắt filter. Đưa máy lại gần để một bên mặt chiếm gần hết khung, mỗi ảnh một vùng, đừng chồng lên nhau.'],
 ];
 
 export default function Home() {
@@ -36,9 +36,9 @@ export default function Home() {
         <div className="hero-photo" aria-hidden="true" />
         <div className="wrap hero-in">
           <div className="hero-copy">
-            <span className="pill">Thăm khám da mặt lâm sàng</span>
-            <h1>Hiểu đúng làn da<br />Để chăm sóc đúng cách</h1>
-            <p className="lead">Ứng dụng công nghệ AI nhận diện nốt mụn qua ảnh chụp hoặc camera, giúp bạn biết mức độ mụn của mình và nhận gợi ý chăm sóc phù hợp ngay trong vài giây.</p>
+            <span className="pill">Đếm mụn qua ảnh chụp</span>
+            <h1>Mụn nhiều hay ít?<br />Chụp ảnh là biết</h1>
+            <p className="lead">Chụp ảnh da mặt hoặc tải ảnh có sẵn lên, AI sẽ đếm số nốt mụn, cho biết mức độ và gợi ý cách chăm sóc. Chỉ mất vài giây.</p>
             <ul className="trio">
               {TRIO.map(([i, t, d]) => (
                 <li key={t}><span className="ico"><Icon name={i} /></span><div><b>{t}</b><small>{d}</small></div></li>
@@ -52,7 +52,7 @@ export default function Home() {
           <aside className="float-card" aria-hidden="true">
             <div className="skin" />
             <ul>
-              {['Đếm nốt mụn tức thì', 'Đánh giá mức độ nhẹ – nặng', 'Gợi ý chăm sóc từ AI'].map((t) => (
+              {['Đếm nốt mụn trong vài giây', 'Xếp mức nhẹ, trung bình, nặng', 'Gợi ý cách chăm sóc'].map((t) => (
                 <li key={t}><Icon name="check" size={15} />{t}</li>
               ))}
             </ul>
@@ -63,9 +63,9 @@ export default function Home() {
       <section className="process" id="quy-trinh">
         <div className="wrap process-in">
           <div className="reveal">
-            <span className="pill sm">Đơn giản – Nhanh chóng – Hiệu quả</span>
+            <span className="pill sm">Làm trong 4 bước</span>
             <h2>Quy trình thăm khám &amp; tư vấn</h2>
-            <p className="sub">Chỉ với vài bước đơn giản, bạn đã có thể hiểu rõ làn da của mình và nhận được lời khuyên hữu ích.</p>
+            <p className="sub">Từ lúc chụp ảnh đến lúc có kết quả chỉ mất vài phút.</p>
             <ol className="steps4">
               {STEPS.map(([i, t, d]) => (
                 <li key={t}><span className="ico lg"><Icon name={i} size={26} /></span><h3>{t}</h3><p>{d}</p></li>
@@ -76,7 +76,7 @@ export default function Home() {
             <div className="book-img" />
             <span className="pill xs">Tư vấn trực tuyến hoặc trực tiếp</span>
             <h3>Đặt lịch tư vấn ngay</h3>
-            <p>Chọn thời gian phù hợp, chuyên gia sẽ liên hệ và hỗ trợ bạn trong thời gian sớm nhất.</p>
+            <p>Chọn giờ bạn rảnh, bên mình sẽ gọi lại để xác nhận.</p>
             <a className="btn primary" href={BOOKING_URL}><Icon name="calendar" size={18} />Đặt lịch ngay <Icon name="arrow" size={16} /></a>
           </div>
         </div>
@@ -115,8 +115,8 @@ export default function Home() {
 
       <section className="band">
         <div className="wrap band-in">
-          <div className="band-lead"><span className="leafbox"><Icon name="leaf" size={26} /></span><div><b>Vì một làn da khỏe đẹp hơn</b><small>Chúng tôi luôn đồng hành cùng bạn.</small></div></div>
-          {[['user', 'Cá nhân hóa', 'Lời khuyên theo từng mức độ'], ['chip', 'Công nghệ AI', 'Nhận diện từng nốt mụn'], ['shield', 'Bảo mật thông tin', 'Không lưu hình ảnh']].map(([i, t, d]) => (
+          <div className="band-lead"><span className="leafbox"><Icon name="leaf" size={26} /></span><div><b>Còn băn khoăn về da?</b><small>Cứ đặt lịch, bác sĩ sẽ tư vấn cho bạn.</small></div></div>
+          {[['user', 'Lời khuyên riêng', 'Tuỳ theo mức độ mụn'], ['chip', 'Đếm bằng AI', 'Khoanh từng nốt mụn'], ['shield', 'Riêng tư', 'Không lưu hình ảnh']].map(([i, t, d]) => (
             <div key={t} className="band-item"><span className="ico dark"><Icon name={i} /></span><div><b>{t}</b><small>{d}</small></div></div>
           ))}
           <a className="btn light" href={BOOKING_URL}>Đặt lịch tư vấn <Icon name="arrow" size={16} /></a>

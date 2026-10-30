@@ -23,7 +23,7 @@ export function useCamera(videoRef, { on, facing, deviceId }) {
     (async () => {
       try {
         if (!navigator.mediaDevices?.getUserMedia) throw new Error('insecure');
-        // Xin độ phân giải cao nhất camera hỗ trợ: model cần ảnh chi tiết, khung 720p dễ bỏ sót mụn nhỏ
+        // Xin độ phân giải cao nhất có thể, khung 720p dễ bỏ sót mụn nhỏ
         const size = { width: { ideal: 4096 }, height: { ideal: 3072 } };
         stream = await navigator.mediaDevices.getUserMedia({
           audio: false,

@@ -3,9 +3,9 @@
     cd backend
     .venv/Scripts/python eval_conf.py D:/acne04v2/acne04v2_yolo/test/images [--labels DIR]
 
-Model chạy MỘT lần mỗi ảnh ở CONF_FLOOR (đã bỏ khung trùng như web), sau đó lọc lại theo từng ngưỡng.
-Nhãn gốc có thể thiếu, nên P/R/F1 chỉ để tham khảo. Nên chú ý độ lệch số đếm, mức độ khớp
-và độ ổn định (số đếm thay đổi bao nhiêu khi ngưỡng lệch ±0.05).
+Mỗi ảnh chỉ chạy model một lần ở CONF_FLOOR (đã bỏ khung trùng như web), rồi lọc lại theo từng ngưỡng.
+Nhãn gốc còn thiếu nên P/R/F1 chỉ để tham khảo, nhìn độ lệch số đếm, mức độ khớp
+và độ ổn định (số đếm đổi bao nhiêu khi ngưỡng lệch ±0.05) thì hơn.
 Không lưu ảnh, chỉ in bảng.
 """
 import argparse
@@ -65,7 +65,7 @@ for n, p in enumerate(files, 1):
     print(f"\r{n}/{len(files)}", end="", flush=True)
 print()
 
-# Kiểm tra: bỏ trùng ở FLOOR rồi lọc ngưỡng == lọc ngưỡng rồi bỏ trùng (FE dựa vào tính chất này)
+# Bỏ trùng ở FLOOR rồi lọc ngưỡng phải ra giống lọc ngưỡng rồi bỏ trùng, FE dựa vào điều này
 for t in (0.15, 0.25, 0.4):
     assert all(len(d[d[:, 4] >= t]) == len(dedup(r[r[:, 4] >= t], *s0)) for d, r, _ in data), t
 

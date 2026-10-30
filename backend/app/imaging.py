@@ -12,11 +12,11 @@ try:
 except ImportError:
     HEIF = False
 
-Image.MAX_IMAGE_PIXELS = 80_000_000  # đủ cho ảnh 48MP, chặn ảnh "bom giải nén"
+Image.MAX_IMAGE_PIXELS = 80_000_000  # đủ cho ảnh 48 MP, chặn được ảnh bom giải nén
 
 
 def load(data: bytes) -> Image.Image:
-    """Đọc ảnh (JPG/PNG/HEIC...), xoay đúng theo EXIF, trả về ảnh RGB ở độ phân giải gốc (không thu nhỏ)."""
+    """Đọc ảnh JPG/PNG/HEIC, xoay theo EXIF, trả ảnh RGB giữ nguyên độ phân giải."""
     img = Image.open(io.BytesIO(data))
     img = ImageOps.exif_transpose(img)
     return img.convert("RGB")
@@ -27,7 +27,7 @@ def to_bgr(img: Image.Image) -> np.ndarray:
 
 
 def preview_b64(img: Image.Image, max_side: int) -> str:
-    """Ảnh JPEG thu nhỏ (đã xoay đúng) để FE hiển thị và vẽ khung. Không lưu ra đĩa."""
+    """Ảnh JPEG thu nhỏ đã xoay đúng chiều để FE hiển thị và vẽ khung. Không lưu ra đĩa."""
     p = img.copy()
     p.thumbnail((max_side, max_side), Image.LANCZOS)
     buf = io.BytesIO()
