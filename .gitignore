@@ -1,0 +1,35 @@
+# ===== Thư viện cài đặt (rất nặng, cài lại được) =====
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# ===== Build =====
+dist/
+.vercel/
+
+# ===== Bí mật (token LLM, khoá API). Chỉ đẩy file .env.example =====
+.env
+.env.*
+!.env.example
+
+# ===== Model & dữ liệu nhạy cảm (ảnh khuôn mặt) =====
+*.pt
+*.heic
+backend/weights/
+backend/test_out/
+backend/colab_bundle.zip
+*.zip
+# ảnh ghép khuôn mặt bệnh nhân từ lúc train (giữ results.csv, args.yaml, biểu đồ)
+model/**/train_batch*.jpg
+model/**/val_batch*.jpg
+
+# ===== Máy cá nhân / IDE =====
+.claude/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log

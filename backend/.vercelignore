@@ -1,0 +1,11 @@
+.venv
+__pycache__
+weights
+test_out
+*.pt
+*.zip
+.env
+test_model.py
+eval_conf.py
+infer_server.py
+pack_colab.py

@@ -1,0 +1,10 @@
+# Máy CHẠY MODEL (máy local có GPU, hoặc Colab): pip install -r requirements-model.txt
+-r requirements.txt
+numpy
+opencv-python-headless
+pillow
+pillow-heif
+ultralytics==8.4.192
+# torch CUDA trên Windows: cài SAU file này, vì pip sẽ kéo torch bản CPU từ PyPI. Lệnh đã dùng (2026-10-30, Python 3.10, driver 610.62):
+#   pip install --force-reinstall --no-deps torch==2.14.1 torchvision==0.29.2 --index-url https://download.pytorch.org/whl/cu132
+# Colab đã có sẵn torch CUDA, không cần cài lại.

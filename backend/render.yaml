@@ -1,0 +1,33 @@
+# Render Blueprint cho BACKEND TRUNG GIAN (model chạy ở Colab, xem DEPLOY.md).
+# Nếu repo có cả frontend/ thì Render đọc file này ở thư mục gốc repo: chuyển file ra gốc và giữ rootDir: backend.
+services:
+  - type: web
+    name: acnescope-api
+    runtime: python
+    rootDir: backend
+    region: singapore
+    plan: free            # free ngủ sau 15 phút không dùng; starter thì không ngủ
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/config
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: INFERENCE_URL
+        sync: false       # điền địa chỉ ngrok
+      - key: INFERENCE_API_KEY
+        sync: false       # trùng INFER_API_KEY trên Colab
+      - key: MAX_UPLOAD_MB
+        value: "30"       # Render không giới hạn 4,5 MB như Vercel -> gửi ảnh gốc
+      - key: CONF_DEFAULT
+        value: "0.175"
+      - key: CORS_ORIGINS
+        sync: false       # domain frontend, ví dụ https://acnescope.vercel.app
+      - key: LLM_PROVIDER
+        sync: false
+      - key: LLM_BASE_URL
+        sync: false
+      - key: LLM_API_KEY
+        sync: false
+      - key: LLM_MODEL
+        sync: false
