@@ -7,7 +7,7 @@ import { AGGREGATE_TEXT, DEFAULT_CFG, countAt, levelFor, overallLevel } from '..
 import Icon from './Icon.jsx';
 import PhotoScan, { HINTS } from './PhotoScan.jsx';
 import Stage from './Stage.jsx';
-import { AiBlock, LevelTable, Ring, colorOf } from './Report.jsx';
+import { AiBlock, ChatBox, LevelTable, Ring, colorOf } from './Report.jsx';
 
 const STEPS = {
   photo: ['Chụp / chọn ảnh', 'AI đếm nốt mụn', 'AI nhận xét', 'Xem kết quả'],
@@ -274,6 +274,8 @@ export default function ScanPage() {
               ? 'Thêm ít nhất 1 ảnh rồi bấm “Phân tích & nhận lời khuyên”, AI sẽ nhận xét và đề xuất cách chăm sóc.'
               : 'Bật camera, chụp 1–3 ảnh rồi bấm “Phân tích & nhận lời khuyên”.'}
           />
+
+          {result?.data?.source === 'llm' && !stale && <ChatBox key={at} counts={result.counts} note={note} />}
 
           <p className="disclaimer"><Icon name="shield" size={16} />Kết quả chỉ mang tính tham khảo, không thay thế chẩn đoán của bác sĩ.</p>
 

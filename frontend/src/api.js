@@ -54,6 +54,13 @@ export async function fitUpload(file, maxMB) {
   throw new Error(`Ảnh quá lớn, không nén được xuống dưới ${maxMB} MB.`);
 }
 
+export const sendChat = (counts, note, messages) =>
+  req('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ counts, note, messages }),
+  });
+
 export const getAdvice = (counts, note) =>
   req('/api/advice', {
     method: 'POST',

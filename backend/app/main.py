@@ -1,13 +1,14 @@
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
+from typing import Literal
 
 import httpx
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from .advice import get_advice
+from .advice import get_advice, get_chat
 from .config import settings
 from .severity import AGGREGATES, grade, levels, overall
 
@@ -114,10 +115,36 @@ class AdviceIn(BaseModel):
     note: str = Field(default="", max_length=500)
 
 
+class ChatMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str = Field(min_length=1, max_length=4000)
+
+
+class ChatIn(AdviceIn):
+    messages: list[ChatMessage] = Field(min_length=1, max_length=20)
+
+
+def _check_counts(counts: list[int]):
+    if any(c < 0 or c > 1000 for c in counts):
+        raise HTTPException(422, "Số mụn không hợp lệ")
+
+
 @app.post("/api/advice")
 async def advice(body: AdviceIn):
-    if any(c < 0 or c > 1000 for c in body.counts):
-        raise HTTPException(422, "Số mụn không hợp lệ")
+    _check_counts(body.counts)
     sev = overall(body.counts, settings)
     data, source = await get_advice(settings, body.counts, sev, body.note)
     return {"counts": body.counts, "total": sum(body.counts), "severity": sev, "advice": data, "source": source}
+
+
+@app.post("/api/chat")
+async def chat(body: ChatIn):
+    """Tư vấn: đoạn chat của người dùng + số nốt mụn + tình trạng (note). Không gửi ảnh cho LLM."""
+    _check_counts(body.counts)
+    if body.messages[-1].role != "user":
+        raise HTTPException(422, "Tin nhắn cuối phải của người dùng")
+    sev = overall(body.counts, settings)
+    reply = await get_chat(settings, body.counts, sev, body.note, [m.model_dump() for m in body.messages])
+    if reply is None:
+        raise HTTPException(503, "AI tư vấn đang bận hoặc chưa được cấu hình. Vui lòng thử lại sau.")
+    return {"reply": reply}

@@ -242,6 +242,15 @@ textarea { font: inherit; width: 100%; padding: 10px 12px; border: 1px solid var
 .suggest li, .more-box li { list-style: disc; margin-left: 18px; color: #4a6561; margin-bottom: 3px; }
 .more-box { font-size: 13px; animation: up .4s both; } .more-box h5 { font-size: 13px; margin: 8px 0 4px; color: var(--g900); }
 .ai .btn { justify-self: start; } .fine { font-size: 12px; color: var(--muted); }
+.urgent { display: flex; gap: 8px; background: #fdf0e9; border-left: 3px solid #e0662b; border-radius: 10px; padding: 10px 12px; font-size: 13.5px; font-weight: 600; color: #8a3a12; }
+.urgent svg { flex: none; margin-top: 2px; }
+.chat { border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; display: grid; gap: 12px; }
+.chat h4 { display: flex; align-items: center; gap: 8px; font-size: 16px; } .chat h4 svg { color: var(--g700); }
+.chat ul { display: grid; gap: 8px; max-height: 360px; overflow-y: auto; font-size: 13.5px; }
+.chat li { padding: 8px 12px; border-radius: 12px; white-space: pre-wrap; overflow-wrap: anywhere; max-width: 90%; }
+.chat li.user { justify-self: end; background: var(--mint); color: var(--g900); }
+.chat li.assistant { justify-self: start; background: var(--mint2); }
+.chat form { display: grid; gap: 8px; } .chat form .btn { justify-self: end; }
 .conf { border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px; font-size: 13px; color: var(--muted); }
 .conf summary { cursor: pointer; } .conf summary b { color: var(--g900); font-variant-numeric: tabular-nums; }
 .conf input { width: 100%; margin: 12px 0 6px; accent-color: var(--g700); }
