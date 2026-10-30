@@ -2,6 +2,10 @@
 
 Web app đếm mụn qua ảnh, backend FastAPI, frontend React/Vite. Người dùng tải lên hoặc chụp tối đa 3 ảnh cận da mặt, YOLO26m đếm mụn từng ảnh rồi cộng lại. Mức độ xếp theo thang Hayashi rút gọn cho từng ảnh, sau đó AI gợi ý cách chăm sóc.
 
+![Trang chủ](docs/trang-chu.png)
+
+![Trang thăm khám AI](docs/tham-kham.png)
+
 Cách deploy: [DEPLOY.md](DEPLOY.md). Notebook train và báo cáo: [train/](train/).
 
 ## 1. Backend
